@@ -1,0 +1,16 @@
+body {
+    background-color: beige;
+}
+
+.se {
+    color: cornflowerblue;
+    transition: color 0.5s ease-in-out; /* 서서히 변하게 함 */
+}
+
+.clicked {
+    color: tomato;
+}
+
+.hidden {
+    display : none;
+}

@@ -1,0 +1,78 @@
+★★★live server 도구 설치 후 HTML 우클릭해서 실행하면
+실시간으로 개발자 콘솔에 반영됨
+
+★★★ API 주석 후에 함수 정의가 되어 있다
+
+console.dir = 요소를 HTML과 같은 트리 구조로 출력합니다
+*여기서 on이붙은 것들(이벤트)은 쓸 수 있다
+
+addEventListener("type", listener) = 이벤트 추가
+ex) title.addEventListener("mouseenter",mouseon) >> title의 mouseenter타입의 mouseon이벤트를 추가함
+
+removeEventListener("type", listener) = 이벤트 제거
+ex) title.removeEventListener("mouseenter"mouseon) >> title의 mouseenter타입의 mouseon이벤트를 제거함
+
+*onclick이벤트와 동일한 기능을 한다
+ex) title.onmouseenter = mmsov
+
+*onclick 대신 addEventListener를 사용하면 removeEventListener로 이벤트를 제거하기 쉽다.
+*만약 onclick을 사용했고 이벤트를 제거하고 싶다면 jquery를 사용하면 쉽게 제거할 수 있다
+ex)$("#title").attr('onclick', '').unbind('click');
+
+Math.random= 0~1 사이 숫자 랜덤 반환 
+ex) 0.1, 0.8
+
+Math.floor =  주어진 숫자와 같거나 작은 정수 중에서 가장 큰 수를 반환
+*랜덤 숫자 뽑을 때 가장 큰 정수를 뽑을 때 사용
+
+소숫점 없이 사용하는 정수를 뽑고 싶으면 Math.floor(Math.random()*숫자); 사용 
+※+1를 붙혀주면 곱한 값까지의 최댓값
+
+resize = 크기가 변경되면 실행
+ex) function.test() {test.style.color = "red";}
+
+offline , online = 인터넷 연결(WiFi)여부에 따라 실행
+
+h1.classList.toggle("test") = h1의 classList중  test가 있으면 제거, 없으면 추가해준다
+
+
+setInterval(test, 5000); = setInterval은 첫번째로 받은 인자를 실행한다, 두번째로 받은 값의 시간으로 > 5000은 5초이다
+
+// 날짜를 실시간으로 얻기
+    const date = new Date();
+    const dateString = date.toLocaleDateString('ko',{
+        year: 'numeric',
+        month:'short',
+        day: 'numeric',
+        // weekday: 'short',
+        hour: 'numeric',
+        minute: 'numeric',
+        second:'numeric'
+    })
+
+PadStart = string타입의 값의 앞에 값을 추가해준다
+ex) "hello".padStart(10, "x") = 문자가 10글자가 안되면 앞에 x를 채워넣는다 -> "xxxxxhello"
+PadStart = string타입의 값의 뒤에 값을 추가해준다
+
+Math 객체 기능
+Math.random() 0부터 1사이 무작위의 값을 반환해줌
+Math.floor() 내림
+Math.ceil() 올림
+Math.round() 반올림
+
+getCurrentPosition = 2개의 argument가 필요한데 하나는 모든 것이 잘 됐을 때 실행하는 함수이고 
+다른 하나는 에러 시에 실행 할 함수이다
+ex) navigator.geolocation.getCurrentPosition(onGeoOk,onGeoNO);
+
+assign이란 지정한 객체들의 모든 열거 가능한 자체 속성을 복사해 대상 객체에 붙여 넣고 반환한다
+
+ex) Object.assign(target, ...sources)
+target = 목표 객체. 출처 객체의 속성을 복사해 반영한 후 반환할 객체
+sources = 출처 객체. 목표 객체에 반영하고자 하는 속성들을 갖고 있는 객체들 
+>> 마지막에 선언 된 sources이 앞 값을 덮는다
+
+ex) const fruit1= {color:'red'}			const fruit2= {color:'blue', size:'big'}
+const mix = Object.assign({}, fruit1, fruit2);
+mix의 color = blue , size = big
+
+forEach는 array에 들어있는 값(value)마다 내가 전달한 함수를 출력하는 함수이다

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>계산기</title>
+</head>
+<body>
+    <input id="v1" type="number" onchange="(this.value)">
+    <input id="v2" type="number" onchange="(this.value)">
+    <button id="plt" onclick="plus()">계산</button>
+    
+</body>
+<script>
+    let val1 = document.getElementById("v1");
+    let val2 = document.querySelector("#v2");
+    
+function plus() {
+    let a = val1.value
+    a=Number(a)
+    let b = val2.value
+    b=Number(b)
+
+
+    console.log(a-b)
+}
+
+var value = 1;
+
+var obj = {
+value : 100,
+  foo: function() {
+
+    console.log("foo's this: ",  this);  // obj
+    console.log("foo's this.value: ",  this.value); // 100
+    function bar(a,b) {
+      console.log("bar's this: ",  this); // window
+      console.log("bar's this.value: ", this.value); // 1
+    }
+    bar();
+  }
+};
+
+obj.foo();
+
+</script>
+</html>
