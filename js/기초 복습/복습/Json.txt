@@ -1,0 +1,75 @@
+브라우저 위에서 동작하고 있는 웹사이트나 웹 어플리케이션과 같은 client(클라이언트)들이 
+어떻게 server(서버)와 통신할 수 있는지를 정리한 것을 HTTP(Hypertext Transfer Protocal)라고 하는데
+
+Http는 클라이언트가 서버에게 데이터를 request(요청)할 수 있고 서버는 클라이언트가 요청한 곳에 따라서 
+그에 맞는 response(응답)을 클라이언트에 보내주는 것으로 진행되는 것을 의미함
+
+이렇게 http를 이용해서 서버에게 데이터를 요청해서 받아올 수 있는 방법으로는 AJAX를 사용했다
+AJAX는 웹페이지에서 동적으로 서버에게 데이터를 주고받을 수 있는 기술을 의미한다
+
+브라우저에서 서버와 통신을 할 때는 fetch()를 사용하거나 xml을 사용하는데 xml은 불필요한 태그들이 너무 많이 들어가서
+사이즈가 커지고 가독성도 좋지 않기 때문에 xml대신 JSON을 사용한다
+
+JSON은 데이터를 주고 받을 때 쓸 수 있는 가장 간단한 파일 포맷이다.
+또한 텍스트를 기반으로 가볍고, 읽기 편하고, key와 value로 이루어져 있는 파일 포맷이다
+데이터를 보통 서버와 주고 받을 때 직렬화하고 데이터를 전송할 때 쓰인다
+언어와 언어가 쓰여지는 플랫폼들에 상관없이 직렬화가 가능하다 (json에서 직렬화는 오브젝트와 JSON 포맷을 상호 변환하는 기능을 뜻함)
+*json에는 두가지의 API가 있다 (parse, stringify)
+*동일한 이름의 stringify함수는 전달받는 매개변수의 차이가 있다. 이런 것을 오버로딩이라고 한다
+즉 함수의 이름은 동일하지만 어떤 파라미터, 몇개의 파라미터를 전달하냐에 따라서 각각 다른 방식으로 호출이 가능한데 이것을 오버로딩이라 한다
+
+JSON 관련 페이지 = JSON Diff , JSON Beautifier, JSON parser, JSON Validator
+
+
+오브젝트를 JSON으로 변환하는 방법 = stringify
+
+const game = {
+    name: 'lol',
+    ctgr: 'aos',
+    age: 18,
+    playDate: new Date().toLocaleDateString('ko',{
+        year: 'numeric',
+        month:'short',
+        day: 'numeric',
+        weekday: 'short',
+        hour: 'numeric',
+        minute: 'numeric',
+        second:'numeric'
+    })
+}
+
+json = JSON.stringify(game)
+console.log(json) -> {"name":"lol","ctgr":"aos","age":18,"playDate":"2023년 3월 8일 (수) 오후 3:40:12"}
+
+json = JSON.stringify(game, ['name','age']) //JSON으로 받고 싶은 것만 받을 수 있다
+console.log(json) -> {"name":"lol","age":18}
+
+json = JSON.stringify(game, (key, value) => {
+    console.log(`key: ${key},value:${value}`);
+    key: ,value:[object Object] = 처음 리턴값은 값을 감싸는 최상위 객체
+    key: name,value:lol
+    key: ctgr,value:aos
+    key: age,value:18
+    key: playDate,value:2023년 3월 8일 (수) 오후 3:41:25
+    return key ==='name' ? 'loa' : value  = key가 name이라면 그 값을 loa로 변경하고 없으면 value를 리턴
+})
+console.log(json) -> {"name":"loa","ctgr":"aos","age":18,"playDate":"2023년 3월 8일 (수) 오후 3:51:02"}
+
+
+JSON을 오브젝트로 변환하는 방법
+
+json = JSON.stringify(game);
+console.log(json)
+const obj = JSON.parse(json, (key, value) => {
+    console.log(`key: ${key},value:${value}`);
+    return key === 'playDate' ? new Date(value) : value;
+});
+console.log(obj)
+game.start();
+console.log(game.playDate)
+console.log(obj.playDate.getDate()) //하면 해당값의 일자가 나오는데 
+toLocaleDateString를 사용하면 안나온다
+
+
+
+
