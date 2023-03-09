@@ -1,0 +1,81 @@
+promise는 JS안에 내장된 오브젝트로 비동기적인 함수를 수행할 때 콜백함수 대신에 유용하게 쓸 수 있는 오브젝트이다.
+
+promise의 state(상태)는 promise가 만들어져서 내가 지정한 operation(객체의 기능)이
+수행중일 땐 pending(대기) 상태가 되고 operation이 성공적으로 끝나면 fulfilled(이행) 상태가 된다. -> 완벽하게 완료한 상태
+성공적으로 끝내지 못하면 rejected(거부)상태가 된다. ex)파일을 찾을 수 없거나 네트워크에 문제
+※만약 resolve, reject 둘다 호출하지 않으면 pending상태가 되기 때문에 꼭 호출해야 한다
+
+※promise안에는 네트워크에서 데이터를 받거나 파일에서 큰 데이터를 읽어오는 일을 하는데 이러한 작업을
+동기적으로 하게 되면 해당 작업이 끝나기 전에는 다음라인에 작업이 실행되지 않기 때문이다
+새로운 Promise가 만들어질 때는 executor(콜백함수)가 바로 실행이 된다
+
+promise에는 원하는 기능을 수행해서 해당하는 데이터를 만들어 내는 producer(생산자)와 consumer(소비자)로 나눠진다.
+
+ 1. producer -resolve와 reject를 받는 executor콜백함수를 만드는 생산자
+const promise = new Promise((resolve, reject) => {  //두가지를 받는 콜백함수(executor)를 만든다
+    console.log('doing')
+    //resolve('hyun')
+    setTimeout(() => {
+        reject(new Error('NONONO!')) 
+    }, 3000);
+});
+Promise를 만드는 순간 executor(콜백함수)가 바로 실행되기 때문에 무언가를 눌렀을때
+실행하는 기능은 주의해야 한다
+
+ 2. consumer - producer가 보낸 값을 then이나 catch, finally를 통해 받아오는 소비자
+
+promise.then(value => {
+    console.log(value)
+})
+.catch(error => {
+    console.log(error)
+})
+.finally(() => {
+    console.log(11)
+})
+
+then은 Promise가 정상적으로 수행이 돼서 최종적으로 resolve콜백함수를 통해서 전달한 값을 파라미터에 전달한다.
+catch는 reject콜백함수를 통해서 Error() 오브젝트를 통해서 값을 전달한다
+finally은 Promise 가 resolve 되던 reject 되던 상관없이 지정된 함수를 실행한다
+
+
+★Promise chaining (then 메소드를 이어 붙이는 것)
+ex) const fetchNum = new Promise((res, rej) => res(1))
+
+fetchNum
+.then(num => num * 2)
+.then(num => num * 2)
+.then(num => num * 2)
+.then(num => {
+    return new Promise((res, rej)=>res(num-1))
+})
+.then(num => console.log(num))
+
+★then은 값을 바로 전달해도 되고 다른 비동기인 Promise를 전달해도 된다
+then을 통해 다른 비동기들을 묶어서 처리할 수 있다
+
+-Promise chaining했을 때 오류를 처리하는 방법
+
+const Wstar = new Promise ((res, rej) => {
+    setTimeout(() => res('☆'), 1000)
+});
+const Bstar = color => new Promise ((res, rej) => {
+    setTimeout(() => res(`${color} -> ★`), 1000)
+});
+const Bst = chan => new Promise ((res, rej) => {
+    setTimeout(() => res(`${chan} -> #`), 1000)
+});
+
+Wstar
+.then(Bstar)             
+.then(chan => Bst(chan))    
+.then(last => console.log(last))
+콜백함수를 전달할 때 받아오는 value가 다른 함수로 하나를 호출할 때 생략가능
+                        ↓
+Wstar.then(Bstar).then(Bst).then(console.log) -> then에서 받아오는 value를 Bstar에 암묵적으로 전달해서 호출한다
+
+한줄로 작성하면 가독성이 좋지 않아서 아래와 같이 작성하면 좋다
+Wstar
+    .then(Bstar)
+    .then(Bst)
+    .then(console.log) 

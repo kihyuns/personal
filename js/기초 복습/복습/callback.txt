@@ -1,0 +1,19 @@
+JS는 호이스팅이 된 이후부터 위에서 부터 하나하나 동기적으로 실행된다.
+
+hoisting: var, function 선언 등이 자동적으로 제일 위로 올라가는 것을 말한다
+
+console.log('1')
+setTimeout(() => console.log('4') , 1000) => 1초뒤에 실행한다 (1초뒤에 불러주는 것으로 callback함수라고 한다)
+이것은 비동기적인 실행 방법이다
+console.log('2')
+console.log('3') 나머지는 동기적인 실행
+
+callback에도 동기와 비동기로 나뉜다
+
+Synchronos callback (동기) - 동시에 일어나는 것이다 ex) console
+동기방식은 설계가 매우 간단하고 직관적이지만 
+결과가 주어질 때까지 아무것도 못하고 대기해야 하는 단점
+
+ASynchronos callback (비동기) - 동시에 일어나지 않는 것이다 ex)setTimeout
+비동기방식은 동기보다 복잡하지만 결과가 주어지는데 시간이 걸린다
+그 시간 동안 다른 작업을 할 수 있으므로 자원을 효율적으로 사용할 수 있는 장점

@@ -1,0 +1,30 @@
+async 와 await은 Promise를 깔끔하게 사용할 수 있는 방법이다
+하지만 무조건 async 와 await로 대체해서 사용하는 것은 아니다
+
+async - async 라는 키워드를 함수 앞에 쓰면 코드블럭이 자동으로 Promise로 바뀐다
+
+async 예제
+
+    async function fetchUser() {
+        return  'hyun';
+    }
+    const user = fetchUser();
+    console.log(user);
+    
+
+await - await키워드는 async가 붙은 함수 안에서만 쓸 수 있다
+
+await 예제
+
+function delay(ms) {
+    return new Promise(res => setTimeout(res, ms));  //정해진 ms가 지나면 promise를 리턴하는 코드
+}
+                        await을 사용해서 변환
+function getBanana() {           =>            async function getApple() {
+    return delay(3000)                          await delay(3000)   
+    .then (() => 'banana')                      return 'apple';
+}                                              }
+
+
+ 
+        
