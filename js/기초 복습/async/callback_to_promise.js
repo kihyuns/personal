@@ -4,10 +4,7 @@ class UserStorage {
     loginUser(id, password) { 
         return new Promise((res, rej) => {
             setTimeout(()=>{  
-                if (
-                    (id === 'hyun' && password === '0000') ||
-                    (id === 'kim' && password === '1234')
-                ) {
+                if ((id === 'hyun' && password === '0000') || (id === 'kim' && password === '1234')) {
                     res(id);
                 } else {
                     rej(new Error('not found'))

@@ -20,9 +20,9 @@ function fetchUser() {
     });
 }
 
-// const user = fetchUser();
-// user.then(console.log)
-// console.log(user)
+const user = fetchUser();
+user.then(console.log)
+console.log(user)
 }
 
 //async 사용해서 코드 변환
@@ -34,17 +34,46 @@ function fetchUser() {
     user.then(console.log)
     .then(console.clear)
 
-//await
+//await 사용 예
 
 function delay(ms) {
     return new Promise(res => setTimeout(res, ms));  //정해진 ms가 지나면 promise를 리턴하는 코드
 }
 
 async function getApple() {
-    await delay(3000)   //await은 async안에서만 사용가능
+    await delay(1000)   //await은 async안에서만 사용가능
     return 'apple';
 }
 async function getBanana() {
-    await delay(3000)   //await은 async안에서만 사용가능
-    return 'bana';
+    await delay(1000)
+    return 'banana';
 }
+
+// async function viewFruits() {
+//     const a = await getApple();         여기서 get Apple과 Banana는 서로 연관이 없기 때문에
+//     const b = await getBanana();        딜레이를 병렬처리 해주는게 효율적이다
+//     return `${a} + ${b}`
+// }
+async function viewFruits() {
+    const aPromise = getApple(); 
+    const bPromise = getBanana();
+    const a = await aPromise;
+    const b = await bPromise;
+    return `${a} + ${b}`
+}
+
+viewFruits().then(console.log)
+
+// Promise.all 이용
+function viewAllFruits() {
+    return Promise.all([getApple(),getBanana()])
+    .then(res => res.join(' + '))
+}
+viewAllFruits().then(console.log)
+
+// Promise.race 이용
+function firstOne() {
+    return Promise.race([getApple(), getBanana()]);
+}
+
+firstOne().then(console.log)
